@@ -21,8 +21,7 @@
     </link>
 
     <joint name="base_footprint_joint" type="fixed">
-      <!-- origin xyz="0 0 ${wheel_radius}" rpy="0 0 0" / --> <!-- ${wheel_radius} property must be defined inside wheel description -->
-      <origin xyz="0 0 0.15" rpy="0 0 0" />
+      <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0" /> <!-- ${wheel_radius} property must be defined inside wheel description -->
       <parent link="base_footprint"/>
       <child link="base_link" />
     </joint>    
@@ -90,7 +89,7 @@
   </link>
 
   <joint name="cabinet_joint" type="fixed">
-    <origin xyz="0 0 0" rpy="0 0 0" /> 
+    <origin xyz="0 0 0.234" rpy="0 0 0" /> 
     <parent link="base_link"/>
     <child link="cabinet_link" />
   </joint>    
