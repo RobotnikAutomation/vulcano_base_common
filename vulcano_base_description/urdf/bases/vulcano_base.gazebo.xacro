@@ -25,6 +25,27 @@
 	  </gazebo>
   </xacro:macro>
 
+  <xacro:macro name="omni_drive">
+		<gazebo>
+		<plugin name="omni_drive" filename="libomnidrive_plugin.so">
+			<robotNamespace>/vulcano_base</robotNamespace>
+			<robotParam>robot_description</robotParam>
+			<broadcastTF>1</broadcastTF>
+			<wheelDiameter>0.15</wheelDiameter>
+			<wheelBase>0.933</wheelBase>
+			<trackWidth>0.57</trackWidth>
+			<wheelTorque>40.0</wheelTorque>
+			<motorWheelTorque>25.0</motorWheelTorque>			
+			<commandTopic>/vulcano_base_control/cmd_vel</commandTopic>  
+			<odometryTopic>/vulcano_base/odom</odometryTopic>
+			<odometryFrame>odom</odometryFrame>
+			<robotBaseFrame>base_footprint</robotBaseFrame>
+			<updateRate>100.0</updateRate>
+		</plugin>
+		</gazebo>
+  </xacro:macro>
+	  
+
   <gazebo reference="base_footprint">
     <material>Gazebo/Green</material>
   </gazebo>
