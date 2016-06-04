@@ -31,8 +31,8 @@
 			<robotNamespace>/vulcano_base</robotNamespace>
 			<robotParam>robot_description</robotParam>
 			<broadcastTF>1</broadcastTF>
-			<wheelDiameter>0.15</wheelDiameter>
-			<wheelBase>0.933</wheelBase>
+			<wheelDiameter>0.186</wheelDiameter>
+			<wheelBase>0.934</wheelBase>
 			<trackWidth>0.57</trackWidth>
 			<wheelTorque>40.0</wheelTorque>
 			<motorWheelTorque>25.0</motorWheelTorque>			
@@ -41,6 +41,8 @@
 			<odometryFrame>odom</odometryFrame>
 			<robotBaseFrame>base_footprint</robotBaseFrame>
 			<updateRate>100.0</updateRate>
+			<odometrySource>encoder</odometrySource>
+			<mirrored_axes>false</mirrored_axes>
 		</plugin>
 		</gazebo>
   </xacro:macro>
