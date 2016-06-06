@@ -1,9 +1,7 @@
 <?xml version="1.0"?>
-<robot name="vulcano_base" xmlns:xacro="http://www.ros.org/wiki/xacro"> 
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"> 
   
-  <xacro:include filename="$(find vulcano_base_description)/urdf/bases/vulcano_base.gazebo.xacro" />
-
-  <xacro:macro name="vulcano_base" params="name publish_bf hq">
+  <xacro:macro name="base" params="prefix publish_bf hq">
 
   <!-- Robot mechanical and motor parameters -->
   <xacro:property name="PI" value="3.1415926535897931"/>
@@ -11,7 +9,7 @@
 
   <!-- BASE FOOTPRINT -->
   <xacro:if value="${publish_bf}">
-    <link name="base_footprint">
+    <link name="${prefix}base_footprint">
       <visual>
           <origin xyz="0 0 0" rpy="0 0 0" />
           <geometry>
@@ -22,13 +20,13 @@
 
     <joint name="base_footprint_joint" type="fixed">
       <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0" /> <!-- ${wheel_radius} property must be defined inside wheel description -->
-      <parent link="base_footprint"/>
-      <child link="base_link" />
+      <parent link="${prefix}base_footprint"/>
+      <child link="${prefix}base_link" />
     </joint>    
   </xacro:if>
 
   <!-- BASE_LINK -->
-  <link name="base_link">
+  <link name="${prefix}base_link">
     <inertial>
       <mass value="25.0" />
       <origin xyz="0 0 0" />
@@ -58,7 +56,7 @@
     </collision>     
   </link>
 
-  <link name="cabinet_link">
+  <link name="${prefix}cabinet_link">
     <inertial>
       <mass value="15.0" />
       <origin xyz="0 0 0" />
@@ -88,10 +86,10 @@
     </collision>     
   </link>
 
-  <joint name="cabinet_joint" type="fixed">
+  <joint name="${prefix}cabinet_joint" type="fixed">
     <origin xyz="0 0 0.234" rpy="0 0 0" /> 
-    <parent link="base_link"/>
-    <child link="cabinet_link" />
+    <parent link="${prefix}base_link"/>
+    <child link="${prefix}cabinet_link" />
   </joint>    
 
   </xacro:macro>
