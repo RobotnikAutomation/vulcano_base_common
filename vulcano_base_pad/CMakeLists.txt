@@ -11,10 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
     diagnostic_updater
     )
     
-generate_messages(
-   DEPENDENCIES
-   robotnik_msgs sensor_msgs vulcano_base_pad
- )
+#generate_messages(
+#   DEPENDENCIES
+#   robotnik_msgs sensor_msgs vulcano_base_pad
+# )
 
 catkin_package(
   CATKIN_DEPENDS 
