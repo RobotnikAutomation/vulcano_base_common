@@ -15,7 +15,8 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <run_depend>vulcano_base_description</run_depend>
-  <!-- run_depend>vulcano_base_pad</run_depend -->
+  <run_depend>vulcano_base_navigation</run_depend>
+  <run_depend>vulcano_base_pad</run_depend>
 
   <export>
     <metapackage/>
