@@ -1,5 +1,6 @@
 # vulcano\_base\_common
-Omnidirectional 8 axes mobile robot base Vulcano - common packages
+
+Omnidirectional 8 axes Vulcano Mobile Base - common packages
 
  - vulcano\_base\_description: description (mechanical, kinematic, visual, etc.) of the Vulcano Mobile Base.
  - vulcano\_base\_navigation: configuration of the Vulcano Mobile Base to navigate in known and unknown environments. 
