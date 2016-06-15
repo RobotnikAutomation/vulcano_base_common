@@ -16,6 +16,6 @@
     <xacro:property name="hq" value="true" />
 
     <xacro:vulcano_base prefix="${prefix}" publish_bf="${publish_bf}" hq="${hq}"/>
-    <xacro:ros_control ns="/vulcano_base"/> 
+    <xacro:ros_control ns="/vulcano"/> 
 </robot>
 
