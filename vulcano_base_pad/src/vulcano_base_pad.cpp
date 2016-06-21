@@ -80,6 +80,7 @@ class VulcanoBasePad
 	void jointStateCallback(const sensor_msgs::JointStateConstPtr& msg);
 	
 	ros::NodeHandle nh_;
+	ros::NodeHandle pnh_;
 
 	int linear_x_, linear_y_, linear_z_, angular_;
 	double l_scale_, a_scale_, l_scale_z_; 
@@ -182,7 +183,9 @@ VulcanoBasePad::VulcanoBasePad():
   linear_x_(1),
   linear_y_(0),
   angular_(2),
-  linear_z_(3)
+  linear_z_(3),
+  nh_(),
+  pnh_("~")
 {
 	//! dual ptz ad hoc
 	std::string ptu1_pan_cmd;
@@ -193,61 +196,61 @@ VulcanoBasePad::VulcanoBasePad():
 	current_vel = 0.1;
 
 	//JOYSTICK PAD TYPE
-	nh_.param<std::string>("pad_type",pad_type_,"ps3");
+	pnh_.param<std::string>("pad_type",pad_type_,"ps3");
 	// 
-	nh_.param("num_of_buttons", num_of_buttons_, DEFAULT_NUM_OF_BUTTONS);
+	pnh_.param("num_of_buttons", num_of_buttons_, DEFAULT_NUM_OF_BUTTONS);
 	// MOTION CONF
-	nh_.param("axis_linear_x", linear_x_, DEFAULT_AXIS_LINEAR_X);
-  	nh_.param("axis_linear_y", linear_y_, DEFAULT_AXIS_LINEAR_Y);
-	nh_.param("axis_linear_z", linear_z_, DEFAULT_AXIS_LINEAR_Z);
-	nh_.param("axis_angular", angular_, DEFAULT_AXIS_ANGULAR);
-	nh_.param("scale_angular", a_scale_, DEFAULT_SCALE_ANGULAR);
-	nh_.param("scale_linear", l_scale_, DEFAULT_SCALE_LINEAR);
-	nh_.param("scale_linear_z", l_scale_z_, DEFAULT_SCALE_LINEAR_Z);
-	nh_.param("cmd_topic_vel", cmd_topic_vel_, cmd_topic_vel_);
-	nh_.param("button_dead_man", dead_man_button_, dead_man_button_);
-	nh_.param("button_speed_up", speed_up_button_, speed_up_button_);  //4 Thrustmaster
-	nh_.param("button_speed_down", speed_down_button_, speed_down_button_); //5 Thrustmaster
-	nh_.param<std::string>("joystick_dead_zone", joystick_dead_zone_, "true");
+	pnh_.param("axis_linear_x", linear_x_, DEFAULT_AXIS_LINEAR_X);
+  	pnh_.param("axis_linear_y", linear_y_, DEFAULT_AXIS_LINEAR_Y);
+	pnh_.param("axis_linear_z", linear_z_, DEFAULT_AXIS_LINEAR_Z);
+	pnh_.param("axis_angular", angular_, DEFAULT_AXIS_ANGULAR);
+	pnh_.param("scale_angular", a_scale_, DEFAULT_SCALE_ANGULAR);
+	pnh_.param("scale_linear", l_scale_, DEFAULT_SCALE_LINEAR);
+	pnh_.param("scale_linear_z", l_scale_z_, DEFAULT_SCALE_LINEAR_Z);
+	pnh_.param("cmd_topic_vel", cmd_topic_vel_, cmd_topic_vel_);
+	pnh_.param("button_dead_man", dead_man_button_, dead_man_button_);
+	pnh_.param("button_speed_up", speed_up_button_, speed_up_button_);  //4 Thrustmaster
+	pnh_.param("button_speed_down", speed_down_button_, speed_down_button_); //5 Thrustmaster
+	pnh_.param<std::string>("joystick_dead_zone", joystick_dead_zone_, "true");
 	
 	// DIGITAL OUTPUTS CONF
-	nh_.param("cmd_service_io", cmd_service_io_, cmd_service_io_);
-	nh_.param("button_output_1", button_output_1_, button_output_1_);
-	nh_.param("button_output_2", button_output_2_, button_output_2_);
-	nh_.param("output_1", output_1_, output_1_);
-	nh_.param("output_2", output_2_, output_2_);
+	pnh_.param("cmd_service_io", cmd_service_io_, cmd_service_io_);
+	pnh_.param("button_output_1", button_output_1_, button_output_1_);
+	pnh_.param("button_output_2", button_output_2_, button_output_2_);
+	pnh_.param("output_1", output_1_, output_1_);
+	pnh_.param("output_2", output_2_, output_2_);
 	// PANTILT-ZOOM CONF
-	nh_.param("cmd_topic_ptz", cmd_topic_ptz_, cmd_topic_ptz_);
-	nh_.param("button_ptz_tilt_up", ptz_tilt_up_, ptz_tilt_up_);
-	nh_.param("button_ptz_tilt_down", ptz_tilt_down_, ptz_tilt_down_);
-	nh_.param("button_ptz_pan_right", ptz_pan_right_, ptz_pan_right_);
-	nh_.param("button_ptz_pan_left", ptz_pan_left_, ptz_pan_left_);
-	nh_.param("button_ptz_zoom_wide", ptz_zoom_wide_, ptz_zoom_wide_);
-	nh_.param("button_ptz_zoom_tele", ptz_zoom_tele_, ptz_zoom_tele_);
-  	nh_.param("button_home", button_home_, button_home_);
-	nh_.param("pan_increment", pan_increment_, 1);
-	nh_.param("tilt_increment",tilt_increment_, 1);
-	nh_.param("zoom_increment", zoom_increment_, 1);
-        nh_.param("delta_angle", delta_angle_, 0.15);
+	pnh_.param("cmd_topic_ptz", cmd_topic_ptz_, cmd_topic_ptz_);
+	pnh_.param("button_ptz_tilt_up", ptz_tilt_up_, ptz_tilt_up_);
+	pnh_.param("button_ptz_tilt_down", ptz_tilt_down_, ptz_tilt_down_);
+	pnh_.param("button_ptz_pan_right", ptz_pan_right_, ptz_pan_right_);
+	pnh_.param("button_ptz_pan_left", ptz_pan_left_, ptz_pan_left_);
+	pnh_.param("button_ptz_zoom_wide", ptz_zoom_wide_, ptz_zoom_wide_);
+	pnh_.param("button_ptz_zoom_tele", ptz_zoom_tele_, ptz_zoom_tele_);
+  	pnh_.param("button_home", button_home_, button_home_);
+	pnh_.param("pan_increment", pan_increment_, 1);
+	pnh_.param("tilt_increment",tilt_increment_, 1);
+	pnh_.param("zoom_increment", zoom_increment_, 1);
+        pnh_.param("delta_angle", delta_angle_, 0.15);
 	// PTU RGBD CONF
-	nh_.param<std::string>("ptu1_pan_cmd", ptu1_pan_cmd, "/ptu1_pan_controller/command");
-	nh_.param<std::string>("ptu1_tilt_cmd", ptu1_tilt_cmd, "/ptu1_tilt_controller/command");
-	nh_.param<std::string>("ptu2_pan_cmd", ptu2_pan_cmd, "/ptu2_pan_controller/command");
-	nh_.param<std::string>("ptu2_tilt_cmd", ptu2_tilt_cmd, "/ptu2_tilt_controller/command");
+	pnh_.param<std::string>("ptu1_pan_cmd", ptu1_pan_cmd, "/ptu1_pan_controller/command");
+	pnh_.param<std::string>("ptu1_tilt_cmd", ptu1_tilt_cmd, "/ptu1_tilt_controller/command");
+	pnh_.param<std::string>("ptu2_pan_cmd", ptu2_pan_cmd, "/ptu2_pan_controller/command");
+	pnh_.param<std::string>("ptu2_tilt_cmd", ptu2_tilt_cmd, "/ptu2_tilt_controller/command");
 
         // nh.param<std::string>("/ptu1_pan_controller/state
 
 
-        nh_.param<std::string>("joint_ptu1_pan", joint_ptu1_pan_, "ptu1_joint_1");
-        nh_.param<std::string>("joint_ptu1_tilt", joint_ptu1_tilt_, "ptu1_joint_2");
-        nh_.param<std::string>("joint_ptu2_pan", joint_ptu2_pan_, "ptu2_joint_1");
-        nh_.param<std::string>("joint_ptu2_tilt", joint_ptu2_tilt_, "ptu2_joint_2");
+        pnh_.param<std::string>("joint_ptu1_pan", joint_ptu1_pan_, "ptu1_joint_1");
+        pnh_.param<std::string>("joint_ptu1_tilt", joint_ptu1_tilt_, "ptu1_joint_2");
+        pnh_.param<std::string>("joint_ptu2_pan", joint_ptu2_pan_, "ptu2_joint_1");
+        pnh_.param<std::string>("joint_ptu2_tilt", joint_ptu2_tilt_, "ptu2_joint_2");
 
 
 	// KINEMATIC MODE 
-	nh_.param("button_kinematic_mode", button_kinematic_mode_, button_kinematic_mode_);
-	nh_.param("cmd_service_set_mode", cmd_set_mode_, cmd_set_mode_);
-    nh_.param("cmd_service_home", cmd_home_, cmd_home_);
+	pnh_.param("button_kinematic_mode", button_kinematic_mode_, button_kinematic_mode_);
+	pnh_.param("cmd_service_set_mode", cmd_set_mode_, cmd_set_mode_);
+    pnh_.param("cmd_service_home", cmd_home_, cmd_home_);
 	kinematic_mode_ = 1;
 	
 	ROS_INFO("VulcanoBasePad num_of_buttons_ = %d", num_of_buttons_);	
@@ -273,9 +276,9 @@ VulcanoBasePad::VulcanoBasePad():
 	ROS_INFO("OUTPUT2 button %d", button_output_2_);*/	
 
   	// Publish through the node handle Twist type messages to the guardian_controller/command topic
-	vel_pub_ = nh_.advertise<geometry_msgs::Twist>(cmd_topic_vel_, 1);
+	vel_pub_ = pnh_.advertise<geometry_msgs::Twist>(cmd_topic_vel_, 1);
 	//  Publishes msgs for the pant-tilt cam
-	ptz_pub_ = nh_.advertise<robotnik_msgs::ptz>(cmd_topic_ptz_, 1);
+	ptz_pub_ = pnh_.advertise<robotnik_msgs::ptz>(cmd_topic_ptz_, 1);
 
  	// Listen through the node handle sensor_msgs::Joy messages from joystick 
 	// (these are the references that we will sent to vulcano_base_controller/command)
@@ -292,10 +295,10 @@ VulcanoBasePad::VulcanoBasePad():
 	doHome = nh_.serviceClient<robotnik_msgs::home>(cmd_home_);
 	
 	// Advertise ptu command topics
-	ptu1_pan_pub_ = nh_.advertise<std_msgs::Float64>( ptu1_pan_cmd, 1 );
-	ptu1_tilt_pub_ = nh_.advertise<std_msgs::Float64>( ptu1_tilt_cmd, 1 );
-	ptu2_pan_pub_ = nh_.advertise<std_msgs::Float64>( ptu2_pan_cmd, 1 );
-	ptu2_tilt_pub_ = nh_.advertise<std_msgs::Float64>( ptu2_tilt_cmd, 1 );
+	ptu1_pan_pub_ = pnh_.advertise<std_msgs::Float64>( ptu1_pan_cmd, 1 );
+	ptu1_tilt_pub_ = pnh_.advertise<std_msgs::Float64>( ptu1_tilt_cmd, 1 );
+	ptu2_pan_pub_ = pnh_.advertise<std_msgs::Float64>( ptu2_pan_cmd, 1 );
+	ptu2_tilt_pub_ = pnh_.advertise<std_msgs::Float64>( ptu2_tilt_cmd, 1 );
 
 	
 	// Diagnostics
