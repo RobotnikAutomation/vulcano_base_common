@@ -26,14 +26,14 @@
   </xacro:macro>
  
   <xacro:macro name="motor_wheel" params="prefix parent *origin reflect hq">
-  
+  <!-- TODO: check reflect parameter -->
   <!--MOTOR WHEEL -->  
-    <joint name="${prefix}motor_wheel_joint" type="continuous">
+    <joint name="${prefix}motor_wheel_joint" type="revolute">
       <parent link="${parent}"/>
       <child link="${prefix}motor_wheel"/>
       <insert_block name="origin" />
       <axis xyz="0 0 1" rpy="0 0 0" />
-      <!-- limit effort="${steer_joint_effort_limit}" velocity="${steer_joint_velocity_limit}" lower="-1.5708" upper="1.5708"/ -->
+      <!-- limit effort="${steer_joint_effort_limit}" velocity="${steer_joint_velocity_limit}" lower="-1.5708" upper="1.5708" / -->
       <limit effort="${steer_joint_effort_limit}" velocity="${steer_joint_velocity_limit}" lower="-3.00" upper="3.00"/>
       <joint_properties damping="${steer_joint_damping}" friction="{steer_joint_friction}"/>
     </joint>
