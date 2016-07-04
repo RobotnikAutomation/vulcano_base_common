@@ -141,8 +141,14 @@
       <collision>
         <origin xyz="0 0 0" rpy="${M_PI/2} 0 0" />
         <geometry>
+          <xacro:if value="${reflect}">
+              <mesh filename="package://vulcano_base_description/meshes/wheels/wheel_1.dae" />
+          </xacro:if>
+          <xacro:unless value="${reflect}">
+              <mesh filename="package://vulcano_base_description/meshes/wheels/wheel_1.dae" />
+          </xacro:unless>
           <!-- cylinder length="${wheel_height}" radius="${wheel_radius}" / -->
-          <sphere radius="${wheel_radius}" />
+          <!--<sphere radius="${wheel_radius}" />-->
         </geometry>
       </collision>    
       <inertial>
