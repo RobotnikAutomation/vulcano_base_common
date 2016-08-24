@@ -38,10 +38,6 @@
     <xacro:macro name="vulcano_base" params="prefix publish_bf hq">
         <xacro:base prefix="${prefix}" publish_bf="${publish_bf}" hq="${hq}"/>
         
-        <!-- Gazebo omni steering plugin -->
-        <!--<xacro:omni_steering/>-->
-        <xacro:omni_drive />
-        
         <xacro:motor_wheel prefix="${prefix}front_right_" parent="${prefix}base_link" reflect="false" hq="true">
           <origin xyz="${wheel_offset_x} -${wheel_offset_y} ${wheel_offset_z}" rpy="0 0 0"/>
         </xacro:motor_wheel>
