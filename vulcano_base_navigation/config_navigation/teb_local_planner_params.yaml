@@ -1,7 +1,7 @@
 base_local_planner: teb_local_planner/TebLocalPlannerROS
 
 TebLocalPlannerROS:
-  odom_topic: /vulcano_base/odom
+  odom_topic: odom
   map_frame: /odom
      
   # Trajectory

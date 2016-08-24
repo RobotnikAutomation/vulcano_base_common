@@ -3,10 +3,9 @@
 <node pkg="amcl" type="amcl" name="amcl" output="screen">
 
   <!-- remap from="scan" to="hokuyo_laser_topic" / -->
-  <remap from="scan" to="scan" />
   <remap from="cmd_vel" to="cmd_vel" />
   
-  <remap from="scan" to="hokuyo/scan" />
+  <remap from="scan" to="laser/scan" />
 
   <!-- Publish scans from best pose at a max of 10 Hz -->
   <param name="odom_model_type" value="diff"/>
