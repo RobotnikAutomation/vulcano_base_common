@@ -64,8 +64,15 @@
         </xacro:sensor_sick_s300>
         
         <xacro:sensor_sick_s300 name="back_right_laser" parent="${prefix}base_link">
-            <origin xyz="-0.606321 -0.345821 0.3095" rpy="${180*deg2rad} 0 ${235*deg2rad}"/>
+            <origin xyz="-0.606321 -0.345821 0.3095" rpy="${180*deg2rad} 0 ${225*deg2rad}"/>
         </xacro:sensor_sick_s300>
+        
+        <joint name="merged_base_laser_joint" type="fixed"> <!-- front and back laser will be merged into this link -->
+            <origin xyz="0 0 0.234" rpy="0 0 0" /> 
+            <parent link="${prefix}base_link"/>
+            <child link="${prefix}merged_base_laser_link" />
+        </joint>
+        <link name="merged_base_laser_link" />
    </xacro:macro>    
 </robot>
 
