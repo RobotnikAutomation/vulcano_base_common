@@ -5,5 +5,4 @@ global_costmap:
   static_map: true
   # robot radius +safety_delta 0.25 + 0.02
   # set to permit drawing a trajectory through the narrowest door
-  inflation_radius: 0.35   
-  
+  inflation_radius: 0.35  

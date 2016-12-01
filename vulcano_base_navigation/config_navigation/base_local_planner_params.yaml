@@ -1,3 +1,4 @@
+base_local_planner: base_local_planner/TrajectoryPlannerROS
 TrajectoryPlannerROS:   # params info in http://wiki.ros.org/base_local_planner
 
   # Robot Configuration Parameters
